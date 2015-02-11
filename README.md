@@ -4,7 +4,7 @@ ShareLaTeX Docker Image
 **Please read this entire file before installing ShareLaTeX via Docker. It's only
 short but contains some important information.**
 
-The recommended way to install and run ShareLaTeX Community Edition is via [Docker](https://www.docker.com/):
+The recommended way to install and run ShareLaTeX Community Edition is via [Docker](https://www.docker.com/): version 1.4 or later is required
 
 ```
 $ docker run -d -v ~/sharelatex_data:/var/lib/sharelatex -p 80 --name=sharelatex sharelatex/sharelatex
@@ -46,7 +46,7 @@ $ docker run -d \
   sharelatex/sharelatex
 ```
 
-Do not change the second part of this parameter (after the :).
+Do not change the second part of this parameter after the :
 
 This is only where ShareLaTeX stores on-disk data.
 Other data is also stored in Mongo and Redis.
