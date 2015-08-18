@@ -34,6 +34,57 @@ If you want to permanently remove ShareLaTeX from your docker containers:
 docker rm sharelatex
 ```
 
+### Using Docker Compose
+[Docker Compose](https://docs.docker.com/compose/) allows you to easily manage multi-container environments.
+Please follow the [install instructions](https://docs.docker.com/compose/install/) to setup Docker Compose.
+(It's really just two commands.)
+
+Once you have installed Docker Compose, you can run 
+
+```
+docker-compose up
+```
+
+to start everything you need:
+
+* A ShareLaTeX container
+* A MongoDB container
+* A Redis container
+* A Data container
+
+**Note**: The ShareLaTeX files (`/var/lib/sharelatex`) are stored in their own [data volume container](https://docs.docker.com/userguide/dockervolumes/#creating-and-mounting-a-data-volume-container).
+
+To start all containers in background use 
+
+```
+docker-compose up -d 
+```
+
+Once all the containers are started you can access ShareLaTeX from `http://localhost` and setup your first user as described below.
+
+**Note**: The name of the ShareLaTeX container (which you need to add an admin user) chages to `sharelatexdockerimage_sharelatex_1` from `sharelatex` if you use `docker-compose`.
+
+To stop everything run
+
+```
+docker-compose stop
+```
+
+to start it again
+
+```
+docker-compose start
+```
+
+and to remove everything (**including your data**)
+
+```
+docker-compose rm
+```
+
+To backup your data see the [offical documentation](https://docs.docker.com/userguide/dockervolumes/#backup-restore-or-migrate-data-volumes).
+
+
 ### Mongo and Redis
 
 ShareLaTeX depends on [MongoDB](http://www.mongodb.org/) (must be 2.4 or later), and
