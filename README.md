@@ -39,7 +39,7 @@ docker rm sharelatex
 Please follow the [install instructions](https://docs.docker.com/compose/install/) to setup Docker Compose.
 (It's really just two commands.)
 
-Once you have installed Docker Compose, you can run 
+Once you have installed Docker Compose, you can run
 
 ```
 docker-compose up
@@ -54,15 +54,19 @@ to start everything you need:
 
 **Note**: The ShareLaTeX files (`/var/lib/sharelatex`) are stored in their own [data volume container](https://docs.docker.com/userguide/dockervolumes/#creating-and-mounting-a-data-volume-container).
 
-To start all containers in background use 
+To start all containers in background use
 
 ```
-docker-compose up -d 
+docker-compose up -d
 ```
 
-Once all the containers are started you can access ShareLaTeX from `http://localhost` and setup your first user as described below.
+Once all the containers are started you can access ShareLaTeX from `http://<docker host>` and setup your first user as described below.
 
-**Note**: The name of the ShareLaTeX container (which you need to add an admin user) chages to `sharelatexdockerimage_sharelatex_1` from `sharelatex` if you use `docker-compose`.
+To add an admin user run
+
+```
+docker-compose run --rm --entrypoint bash sharelatex -c 'cd /var/www/sharelatex/web; grunt create-admin-user --email joe@example.com'
+```
 
 To stop everything run
 
@@ -134,8 +138,8 @@ $ docker run -d \
 
 ### Storing Data
 
-The `-v ~/sharelatex_data:/var/lib/sharelatex` option in the `run` command tells 
-Docker to make the host directory `~/sharelatex_data` available inside the container for 
+The `-v ~/sharelatex_data:/var/lib/sharelatex` option in the `run` command tells
+Docker to make the host directory `~/sharelatex_data` available inside the container for
 ShareLaTeX to store data files in. This means that you can back up and access these
 files manually outside of the ShareLaTeX container. If you would like to store ShareLaTeX data
 in a different location, such as `/home/james/my_data`, just change this parameter:
@@ -181,14 +185,14 @@ ShareLaTeX knows where to refer to scripts and links that need loading.)**
 
 ### LaTeX environment
 
-To save bandwidth, the ShareLaTeX image only comes with a minimal install of 
+To save bandwidth, the ShareLaTeX image only comes with a minimal install of
 TeXLive. To upgrade to a complete TeXLive installation, run the following command:
 
 ```
 $ docker exec sharelatex tlmgr install scheme-full
 ```
 
-Or you can install packages manually as you need by replacing `scheme-full` by 
+Or you can install packages manually as you need by replacing `scheme-full` by
 the package name.
 
 ### Configuration Options
