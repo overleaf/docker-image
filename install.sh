@@ -53,8 +53,6 @@ echo "selected_scheme scheme-basic" >> /install-tl-unx/texlive.profile
 /install-tl-unx/install-tl -profile /install-tl-unx/texlive.profile
 rm install-tl-unx.tar.gz
 
-ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/texlive/2015/bin/x86_64-linux/
-
 # update tlmgr and install latexmk
 tlmgr update --self
 tlmgr install latexmk
