@@ -1,0 +1,27 @@
+sharelatex:
+  image: sharelatex/sharelatex
+  links:
+    - mongo
+    - redis
+  ports:
+    - "80:80"
+  volumes_from:
+    - data
+  environment:
+    SHARELATEX_MONGO_URL: mongodb://mongo/sharelatex
+    SHARELATEX_REDIS_HOST: redis
+
+mongo:
+  image: mongo:2.6
+  expose:
+    - "27017"
+
+redis:
+  image: redis
+  expose:
+    - "6379"
+
+data:
+  image: tianon/true
+  volumes:
+    - /var/lib/sharelatex
