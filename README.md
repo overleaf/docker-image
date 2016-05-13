@@ -134,9 +134,10 @@ ShareLaTeX knows where to refer to scripts and links that need loading.)**
 ### LaTeX environment
 
 To save bandwidth, the ShareLaTeX image only comes with a minimal install of 
-TeXLive. To upgrade to a complete TeXLive installation, run the following command:
+TeXLive. To upgrade to a complete TeXLive installation, run the following commands:
 
 ```
+$ docker exec sharelatex tlmgr update --self
 $ docker exec sharelatex tlmgr install scheme-full
 ```
 
