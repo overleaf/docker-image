@@ -1,5 +1,8 @@
 FROM phusion/baseimage:0.9.16
 
+# Update package index files
+RUN apt-get update
+
 # Install Node.js and Grunt
 RUN curl -sL https://deb.nodesource.com/setup | sudo bash -
 RUN apt-get install -y build-essential nodejs
