@@ -63,6 +63,7 @@ COPY init_scripts  /etc/my_init.d/
 # Install ShareLaTeX settings file
 RUN mkdir /etc/sharelatex
 COPY ${baseDir}/settings.coffee /etc/sharelatex/settings.coffee
+COPY ${baseDor}/settings.real-time.coffee /var/www/sharelatex/real-time/config/settings.defaults.coffee
 ENV SHARELATEX_CONFIG /etc/sharelatex/settings.coffee
 
 WORKDIR /
