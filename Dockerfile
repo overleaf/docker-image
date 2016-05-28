@@ -54,9 +54,6 @@ RUN cd /var/www/sharelatex/web; \
 RUN cd /var/www/sharelatex/clsi; \
 	grunt compile:bin
 
-RUN mkdir /etc/service/nginx
-ADD ${baseDir}/runit/nginx.sh /etc/service/nginx/run
-
 # Set up ShareLaTeX services to run automatically on boot
 RUN mkdir /etc/service/chat-sharelatex; \
 	mkdir /etc/service/clsi-sharelatex; \
@@ -81,10 +78,6 @@ ADD ${baseDir}/runit/tags-sharelatex.sh             /etc/service/tags-sharelatex
 ADD ${baseDir}/runit/track-changes-sharelatex.sh    /etc/service/track-changes-sharelatex/run
 ADD ${baseDir}/runit/web-sharelatex.sh              /etc/service/web-sharelatex/run
 
-RUN rm /etc/nginx/sites-enabled/default
-ADD ${baseDir}/nginx/nginx.conf /etc/nginx/nginx.conf
-ADD ${baseDir}/nginx/sharelatex.conf /etc/nginx/sites-enabled/sharelatex.conf
-
 RUN rm -r /install-tl-unx; \
 	rm install-tl-unx.tar.gz
 
@@ -103,10 +96,6 @@ RUN mkdir /etc/sharelatex
 ADD ${baseDir}/settings.coffee /etc/sharelatex/settings.coffee
 ENV SHARELATEX_CONFIG /etc/sharelatex/settings.coffee
 
-
-EXPOSE 80
-
 WORKDIR /
-
 ENTRYPOINT ["/sbin/my_init"]
 
