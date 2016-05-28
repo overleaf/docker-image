@@ -34,9 +34,9 @@ RUN adduser --system --group --home /var/www/sharelatex --no-create-home sharela
 # Install ShareLaTeX
 RUN git clone https://github.com/sharelatex/sharelatex.git /var/www/sharelatex
 
-ADD ${baseDir}/services.js /var/www/sharelatex/config/services.js
-ADD ${baseDir}/package.json /var/www/package.json
-ADD ${baseDir}/git-revision.js /var/www/git-revision.js
+COPY ${baseDir}/services.js /var/www/sharelatex/config/services.js
+COPY ${baseDir}/package.json /var/www/package.json
+COPY ${baseDir}/git-revision.js /var/www/git-revision.js
 RUN cd /var/www && npm install
 
 RUN cd /var/www/sharelatex; \
@@ -44,7 +44,7 @@ RUN cd /var/www/sharelatex; \
 	grunt install;
 
 RUN cd /var/www && node git-revision > revisions.txt
-	
+
 # Minify js assets
 RUN cd /var/www/sharelatex/web; \
 	grunt compile:minify;
@@ -65,33 +65,32 @@ RUN mkdir /etc/service/chat-sharelatex; \
 	mkdir /etc/service/web-sharelatex;
 
 
-ADD ${baseDir}/runit/chat-sharelatex.sh             /etc/service/chat-sharelatex/run
-ADD ${baseDir}/runit/clsi-sharelatex.sh             /etc/service/clsi-sharelatex/run
-ADD ${baseDir}/runit/docstore-sharelatex.sh         /etc/service/docstore-sharelatex/run
-ADD ${baseDir}/runit/document-updater-sharelatex.sh /etc/service/document-updater-sharelatex/run
-ADD ${baseDir}/runit/filestore-sharelatex.sh        /etc/service/filestore-sharelatex/run
-ADD ${baseDir}/runit/real-time-sharelatex.sh        /etc/service/real-time-sharelatex/run
-ADD ${baseDir}/runit/spelling-sharelatex.sh         /etc/service/spelling-sharelatex/run
-ADD ${baseDir}/runit/tags-sharelatex.sh             /etc/service/tags-sharelatex/run
-ADD ${baseDir}/runit/track-changes-sharelatex.sh    /etc/service/track-changes-sharelatex/run
-ADD ${baseDir}/runit/web-sharelatex.sh              /etc/service/web-sharelatex/run
+COPY ${baseDir}/runit/chat-sharelatex.sh             /etc/service/chat-sharelatex/run
+COPY ${baseDir}/runit/clsi-sharelatex.sh             /etc/service/clsi-sharelatex/run
+COPY ${baseDir}/runit/docstore-sharelatex.sh         /etc/service/docstore-sharelatex/run
+COPY ${baseDir}/runit/document-updater-sharelatex.sh /etc/service/document-updater-sharelatex/run
+COPY ${baseDir}/runit/filestore-sharelatex.sh        /etc/service/filestore-sharelatex/run
+COPY ${baseDir}/runit/real-time-sharelatex.sh        /etc/service/real-time-sharelatex/run
+COPY ${baseDir}/runit/spelling-sharelatex.sh         /etc/service/spelling-sharelatex/run
+COPY ${baseDir}/runit/tags-sharelatex.sh             /etc/service/tags-sharelatex/run
+COPY ${baseDir}/runit/track-changes-sharelatex.sh    /etc/service/track-changes-sharelatex/run
+COPY ${baseDir}/runit/web-sharelatex.sh              /etc/service/web-sharelatex/run
 
 RUN rm -r /install-tl-unx; \
 	rm install-tl-unx.tar.gz
 
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/texlive/2015/bin/x86_64-linux/
-RUN apt-get update
 RUN tlmgr install latexmk
 
 # phusion/baseimage init script
-ADD ${baseDir}/init_scripts/00_regen_sharelatex_secrets.sh  /etc/my_init.d/00_regen_sharelatex_secrets.sh
-ADD ${baseDir}/init_scripts/00_make_sharelatex_data_dirs.sh /etc/my_init.d/00_make_sharelatex_data_dirs.sh
-ADD ${baseDir}/init_scripts/00_set_docker_host_ipaddress.sh /etc/my_init.d/00_set_docker_host_ipaddress.sh
-ADD ${baseDir}/init_scripts/99_migrate.sh /etc/my_init.d/99_migrate.sh
+COPY ${baseDir}/init_scripts/00_regen_sharelatex_secrets.sh  /etc/my_init.d/00_regen_sharelatex_secrets.sh
+COPY ${baseDir}/init_scripts/00_make_sharelatex_data_dirs.sh /etc/my_init.d/00_make_sharelatex_data_dirs.sh
+COPY ${baseDir}/init_scripts/00_set_docker_host_ipaddress.sh /etc/my_init.d/00_set_docker_host_ipaddress.sh
+COPY ${baseDir}/init_scripts/99_migrate.sh /etc/my_init.d/99_migrate.sh
 
 # Install ShareLaTeX settings file
 RUN mkdir /etc/sharelatex
-ADD ${baseDir}/settings.coffee /etc/sharelatex/settings.coffee
+COPY ${baseDir}/settings.coffee /etc/sharelatex/settings.coffee
 ENV SHARELATEX_CONFIG /etc/sharelatex/settings.coffee
 
 WORKDIR /
