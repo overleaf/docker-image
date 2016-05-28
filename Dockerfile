@@ -23,12 +23,10 @@ RUN npm install -g grunt-cli
 
 # Set up sharelatex user and home directory
 RUN adduser --system --group --home /var/www/sharelatex --no-create-home sharelatex; \
-	mkdir -p /var/lib/sharelatex; \
-	chown www-data:www-data /var/lib/sharelatex; \
 	mkdir -p /var/log/sharelatex; \
 	chown www-data:www-data /var/log/sharelatex; \
 	mkdir -p /var/lib/sharelatex/data/template_files; \
-	chown www-data:www-data /var/lib/sharelatex/data/template_files;
+	chown -R www-data.www-data /var/lib/sharelatex;
 
 
 # Install ShareLaTeX
@@ -41,15 +39,14 @@ RUN cd /var/www && npm install
 
 RUN cd /var/www/sharelatex; \
 	npm install; \
-	grunt install;
-
-RUN cd /var/www && node git-revision > revisions.txt
+	grunt install; \
+  cd /var/www; \
+  node git-revision > revisions.txt
 
 # Minify js assets
 RUN cd /var/www/sharelatex/web; \
-	grunt compile:minify;
-
-RUN cd /var/www/sharelatex/clsi; \
+	grunt compile:minify; \
+  cd /var/www/sharelatex/clsi; \
 	grunt compile:bin
 
 COPY runit /etc/service/
@@ -61,10 +58,7 @@ ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local
 RUN tlmgr install latexmk
 
 # phusion/baseimage init script
-COPY ${baseDir}/init_scripts/00_regen_sharelatex_secrets.sh  /etc/my_init.d/00_regen_sharelatex_secrets.sh
-COPY ${baseDir}/init_scripts/00_make_sharelatex_data_dirs.sh /etc/my_init.d/00_make_sharelatex_data_dirs.sh
-COPY ${baseDir}/init_scripts/00_set_docker_host_ipaddress.sh /etc/my_init.d/00_set_docker_host_ipaddress.sh
-COPY ${baseDir}/init_scripts/99_migrate.sh /etc/my_init.d/99_migrate.sh
+COPY init_scripts  /etc/my_init.d/
 
 # Install ShareLaTeX settings file
 RUN mkdir /etc/sharelatex
