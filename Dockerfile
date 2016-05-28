@@ -52,29 +52,7 @@ RUN cd /var/www/sharelatex/web; \
 RUN cd /var/www/sharelatex/clsi; \
 	grunt compile:bin
 
-# Set up ShareLaTeX services to run automatically on boot
-RUN mkdir /etc/service/chat-sharelatex; \
-	mkdir /etc/service/clsi-sharelatex; \
-	mkdir /etc/service/docstore-sharelatex; \
-	mkdir /etc/service/document-updater-sharelatex; \
-	mkdir /etc/service/filestore-sharelatex; \
-	mkdir /etc/service/real-time-sharelatex; \
-	mkdir /etc/service/spelling-sharelatex; \
-	mkdir /etc/service/tags-sharelatex; \
-	mkdir /etc/service/track-changes-sharelatex; \
-	mkdir /etc/service/web-sharelatex;
-
-
-COPY ${baseDir}/runit/chat-sharelatex.sh             /etc/service/chat-sharelatex/run
-COPY ${baseDir}/runit/clsi-sharelatex.sh             /etc/service/clsi-sharelatex/run
-COPY ${baseDir}/runit/docstore-sharelatex.sh         /etc/service/docstore-sharelatex/run
-COPY ${baseDir}/runit/document-updater-sharelatex.sh /etc/service/document-updater-sharelatex/run
-COPY ${baseDir}/runit/filestore-sharelatex.sh        /etc/service/filestore-sharelatex/run
-COPY ${baseDir}/runit/real-time-sharelatex.sh        /etc/service/real-time-sharelatex/run
-COPY ${baseDir}/runit/spelling-sharelatex.sh         /etc/service/spelling-sharelatex/run
-COPY ${baseDir}/runit/tags-sharelatex.sh             /etc/service/tags-sharelatex/run
-COPY ${baseDir}/runit/track-changes-sharelatex.sh    /etc/service/track-changes-sharelatex/run
-COPY ${baseDir}/runit/web-sharelatex.sh              /etc/service/web-sharelatex/run
+COPY runit /etc/service/
 
 RUN rm -r /install-tl-unx; \
 	rm install-tl-unx.tar.gz
