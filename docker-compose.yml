@@ -1,0 +1,56 @@
+version: '2'
+
+volumes:
+  data:
+    driver: local
+  mongo:
+    driver: local
+
+networks:
+  main:
+    driver: bridge
+
+services:
+  redis:
+    container_name: redis
+    image: redis
+    networks:
+      - main
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - mongo:/data/db
+    networks:
+      - main
+
+  sharelatex:
+    container_name: sl
+    depends_on:
+      - redis
+      - mongo
+    build: ./
+    volumes:
+      - data:/var/lib/sharelatex
+    environment:
+      - SHARELATEX_SITE_URL=http://localhost
+      - SHARELATEX_ADMIN_EMAIL=share@latex.con
+      - SHARELATEX_APP_NAME=Sharelatex Community Edition
+      - SHARELATEX_MONGO_URL=mongodb://mongo/sharelatex
+      - SHARELATEX_REDIS_HOST=redis
+    networks:
+      - main
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    depends_on:
+      - sharelatex
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - main
+    ports:
+      - "80:80"
+

@@ -349,10 +349,10 @@ settings =
 	# an HTTP API running on a different port. Generally you
 	# can leave these as they are unless you have some other services
 	# running which conflict, or want to run the web process on port 80.
-	# internal:
-	# 	web:
-	# 		port: webPort = 3000
-	# 		host: "localhost"
+	internal:
+		web:
+			port: webPort = 3000
+			host: "0.0.0.0"
 	# 	documentupdater:
 	# 		port: docUpdaterPort = 3003
 	# 		host: "localhost"
