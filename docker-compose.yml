@@ -1,0 +1,17 @@
+sharelatex:
+	image: sharelatex/sharelatex
+	volumes:
+		- ~/sharelatex_data:/var/lib/sharelatex
+	environment:
+		- SHARELATEX_MONGO_URL=mongodb://mongo/sharelatex
+		- SHARELATEX_REDIS_HOST=redis
+		- SHARELATEX_SITE_URL=http://localhost:5000
+	links:
+		- redis
+		- mongo
+	ports:
+		- "5000:80"
+redis:
+	image: redis:3.0.0
+mongo:
+	image: mongo:2.6.9
