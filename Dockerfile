@@ -21,7 +21,7 @@ COPY ${baseDir}/init_scripts/  /etc/my_init.d/
 # Install ShareLaTeX
 RUN git clone https://github.com/sharelatex/sharelatex.git /var/www/sharelatex
 # FIXME: Temporarily use older version of Sharelatex repo
-RUN ch /var/www/sharelatex && git reset --hard 3f963689f9be191ab7a6779c7b412d0203a8fce4
+RUN cd /var/www/sharelatex && git reset --hard 3f963689f9be191ab7a6779c7b412d0203a8fce4
 
 ADD ${baseDir}/services.js /var/www/sharelatex/config/services.js
 ADD ${baseDir}/package.json /var/www/package.json
