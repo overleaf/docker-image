@@ -2,6 +2,8 @@
 
 FROM sharelatex/sharelatex-base:latest
 
+ENV SHARELATEX_VERSION 5064b4cb3afad68bd97244e33c37254531c148e4
+ENV LAUNCHPAD_WEB_MODULE_VERSION fe6aaa63b4146271fc92a25ab9d22ef1099d4501
 ENV baseDir .
 
 # Install sharelatex settings file
@@ -19,23 +21,28 @@ ADD ${baseDir}/logrotate/sharelatex /etc/logrotate.d/sharelatex
 COPY ${baseDir}/init_scripts/  /etc/my_init.d/
 
 # Install ShareLaTeX
-RUN git clone https://github.com/sharelatex/sharelatex.git /var/www/sharelatex
+RUN git clone https://github.com/sharelatex/sharelatex.git /var/www/sharelatex \
+  && cd /var/www/sharelatex \
+  && git checkout $SHARELATEX_VERSION
 
 ADD ${baseDir}/services.js /var/www/sharelatex/config/services.js
 ADD ${baseDir}/package.json /var/www/package.json
 ADD ${baseDir}/git-revision.js /var/www/git-revision.js
 RUN cd /var/www && npm install
 
-RUN cd /var/www/sharelatex; \
-	npm install; \
-	grunt install; \
-	bash -c 'source ./bin/install-services'; \
-	cd web; \
-	npm install; \
-	npm install bcrypt; \
-	cd modules; \
-	git clone https://github.com/sharelatex/launchpad-web-module.git launchpad; \
-	grunt compile;
+RUN cd /var/www/sharelatex \
+  && npm install \
+  && grunt install \
+  && bash -c 'source ./bin/install-services' \
+  && cd web \
+  && npm install \
+  && npm install bcrypt \
+  && cd modules \
+  && git clone https://github.com/sharelatex/launchpad-web-module.git launchpad \
+  && cd launchpad \
+  && git checkout $LAUNCHPAD_WEB_MODULE_VERSION \
+  && cd .. \
+  && grunt compile
 
 RUN cd /var/www && node git-revision > revisions.txt
 	
