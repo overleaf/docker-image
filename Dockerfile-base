@@ -15,13 +15,12 @@ WORKDIR /opt/qpdf-6.0.0
 RUN ./configure && make && make install && ldconfig
 
 # Install TexLive
-RUN wget ftp://tug.org/historic/systems/texlive/2017/install-tl-unx.tar.gz; \
+RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz; \
 	mkdir /install-tl-unx; \
 	tar -xvf install-tl-unx.tar.gz -C /install-tl-unx --strip-components=1
 
 RUN echo "selected_scheme scheme-basic" >> /install-tl-unx/texlive.profile; \
-	/install-tl-unx/install-tl -profile /install-tl-unx/texlive.profile \
-	--repository=ftp://tug.org/historic/systems/texlive/2017/tlnet-final
+	/install-tl-unx/install-tl -profile /install-tl-unx/texlive.profile
 
 RUN rm -r /install-tl-unx; \
 	rm install-tl-unx.tar.gz
