@@ -2,7 +2,7 @@
 export SHARELATEX_CONFIG=/etc/sharelatex/settings.coffee
 
 NODE_PARAMS=""
-if [ $DEBUG_NODE == "true" ]; then
+if [ "$DEBUG_NODE" == "true" ]; then
     echo "running debug - web"
     NODE_PARAMS="--inspect=0.0.0.0:40000"
 fi

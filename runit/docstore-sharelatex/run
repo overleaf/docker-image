@@ -2,7 +2,7 @@
 export SHARELATEX_CONFIG=/etc/sharelatex/settings.coffee
 
 NODE_PARAMS=""
-if [ $DEBUG_NODE == "true" ]; then
+if [ "$DEBUG_NODE" == "true" ]; then
     echo "running debug - docstore"
     NODE_PARAMS="--inspect=0.0.0.0:30160"
 fi
