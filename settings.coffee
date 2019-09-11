@@ -317,7 +317,6 @@ if process.env["SHARELATEX_PASSWORD_VALIDATION_PATTERN"] or process.env["SHARELA
 # ShareLaTeX Server Pro
 #######################
 
-
 if parse(process.env["SHARELATEX_IS_SERVER_PRO"]) == true
 	settings.bypassPercentageRollouts = true
 	settings.apis.references =
