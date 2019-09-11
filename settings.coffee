@@ -186,6 +186,11 @@ settings =
 
 	behindProxy: process.env["SHARELATEX_BEHIND_PROXY"] or false
 
+	# Enables template thumbnail generation via Filestore.
+	# Check https://github.com/overleaf/filestore/pull/43 for further
+	# security information.
+	enableConversions: process.env['ENABLE_IMAGE_MAGICK_CONVERSIONS']  == 'true'
+
 	i18n:
 		subdomainLang:
 			www: {lngCode:process.env["SHARELATEX_SITE_LANGUAGE"] or "en", url: siteUrl}
@@ -312,10 +317,6 @@ if process.env["SHARELATEX_PASSWORD_VALIDATION_PATTERN"] or process.env["SHARELA
 # ShareLaTeX Server Pro
 #######################
 
-# Enables template thumbnail generation via Filestore.
-# Check https://github.com/overleaf/filestore/pull/43 for further
-# security information.
-settings.enableConversions = true
 
 if parse(process.env["SHARELATEX_IS_SERVER_PRO"]) == true
 	settings.bypassPercentageRollouts = true
