@@ -312,6 +312,11 @@ if process.env["SHARELATEX_PASSWORD_VALIDATION_PATTERN"] or process.env["SHARELA
 # ShareLaTeX Server Pro
 #######################
 
+# Enables template thumbnail generation via Filestore.
+# Check https://github.com/overleaf/filestore/pull/43 for further
+# security information.
+settings.enableConversions = true
+
 if parse(process.env["SHARELATEX_IS_SERVER_PRO"]) == true
 	settings.bypassPercentageRollouts = true
 	settings.apis.references =
