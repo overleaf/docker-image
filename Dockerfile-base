@@ -15,10 +15,19 @@ RUN apt-get install -y build-essential wget net-tools unzip time imagemagick opt
 
 # Install qpdf
 # ------------
-WORKDIR /opt
-RUN wget https://s3.amazonaws.com/sharelatex-random-files/qpdf-6.0.0.tar.gz && tar xzf qpdf-6.0.0.tar.gz
-WORKDIR /opt/qpdf-6.0.0
-RUN ./configure && make && make install && ldconfig
+RUN mkdir /opt/qpdf \
+    \
+&&  curl -sSL \
+      https://s3.amazonaws.com/sharelatex-random-files/qpdf-6.0.0.tar.gz \
+    | tar -xzC /opt/qpdf --strip-components=1 \
+    \
+&&  cd /opt/qpdf/ \
+&&    ./configure \
+&&    make \
+&&    make install \
+&&    ldconfig \
+    \
+&&  rm -rf /opt/qpdf
 
 
 # Install Node
