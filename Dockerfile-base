@@ -19,6 +19,8 @@ RUN apt-get update \
 &&  apt-get install -y nodejs \
     \
 &&  rm -rf \
+      /etc/nginx/nginx.conf \
+      /etc/nginx/sites-enabled/default \
       /var/lib/apt/lists/*
 
 
