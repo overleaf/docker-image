@@ -38,26 +38,26 @@ RUN npm install -g grunt-cli
 
 # Install TexLive
 # ---------------
-RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \
-	mkdir /install-tl-unx && \
-	tar -xvf install-tl-unx.tar.gz -C /install-tl-unx --strip-components=1
-RUN echo "selected_scheme scheme-basic" >> /install-tl-unx/texlive.profile && \
-	/install-tl-unx/install-tl -profile /install-tl-unx/texlive.profile
+ARG TEXLIVE_MIRROR=http://mirror.ctan.org/systems/texlive/tlnet
 
-# CTAN mirrors occasionally fail, in that case install TexLive against an
-# specific server, for example http://ctan.crest.fr
-# RUN wget http://ctan.crest.fr/tex-archive/systems/texlive/tlnet/install-tl-unx.tar.gz && \
-# 	  mkdir /install-tl-unx && \
-# 	  tar -xvf install-tl-unx.tar.gz -C /install-tl-unx --strip-components=1
-# RUN echo "selected_scheme scheme-basic" >> /install-tl-unx/texlive.profile && \
-# 	  /install-tl-unx/install-tl -profile /install-tl-unx/texlive.profile  \
-# 	  -repository  http://ctan.crest.fr/tex-archive/systems/texlive/tlnet/
+ENV PATH "${PATH}:/usr/local/texlive/2019/bin/x86_64-linux"
 
-RUN rm -r /install-tl-unx; \
-	rm install-tl-unx.tar.gz
-ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/texlive/2019/bin/x86_64-linux/
-RUN tlmgr install latexmk
-RUN tlmgr install texcount
+RUN mkdir /install-tl-unx \
+&&  curl -sSL \
+      ${TEXLIVE_MIRROR}/install-tl-unx.tar.gz \
+    | tar -xzC /install-tl-unx --strip-components=1 \
+    \
+&&  echo "selected_scheme scheme-basic" >> /install-tl-unx/texlive.profile \
+    \
+&&  /install-tl-unx/install-tl \
+      -profile /install-tl-unx/texlive.profile \
+      -repository ${TEXLIVE_MIRROR} \
+    \
+&&  tlmgr install --repository ${TEXLIVE_MIRROR} \
+      latexmk \
+      texcount \
+    \
+&&  rm -rf /install-tl-unx
 
 
 # Set up sharelatex user and home directory
