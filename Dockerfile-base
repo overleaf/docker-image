@@ -43,7 +43,9 @@ RUN mkdir /opt/qpdf \
 
 # Install Grunt
 # ------------
-RUN npm install -g grunt-cli
+RUN npm install -g \
+      grunt-cli \
+&&  rm -rf /root/.npm
 
 # Install TexLive
 # ---------------
