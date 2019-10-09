@@ -56,6 +56,9 @@ RUN mkdir /install-tl-unx \
       ${TEXLIVE_MIRROR}/install-tl-unx.tar.gz \
     | tar -xzC /install-tl-unx --strip-components=1 \
     \
+&&  echo "tlpdbopt_autobackup 0" >> /install-tl-unx/texlive.profile \
+&&  echo "tlpdbopt_install_docfiles 0" >> /install-tl-unx/texlive.profile \
+&&  echo "tlpdbopt_install_srcfiles 0" >> /install-tl-unx/texlive.profile \
 &&  echo "selected_scheme scheme-basic" >> /install-tl-unx/texlive.profile \
     \
 &&  /install-tl-unx/install-tl \
