@@ -31,9 +31,3 @@ if [ ! -e "/var/lib/sharelatex/data/db.sqlite" ]; then
 fi
 
 chown www-data:www-data /var/lib/sharelatex/data/db.sqlite
-
-# TODO(das7pad): remove once the files are hashed in the build stage
-chown www-data:www-data \
-  /var/www/sharelatex/web/public/minjs/ \
-  /var/www/sharelatex/web/public/minjs/libs/ \
-  /var/www/sharelatex/web/public/stylesheets/ \
