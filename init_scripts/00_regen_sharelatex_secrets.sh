@@ -6,7 +6,7 @@
 WEB_API_PASSWORD_FILE=/etc/container_environment/WEB_API_PASSWORD
 CRYPTO_RANDOM_FILE=/etc/container_environment/CRYPTO_RANDOM
 
-if [ ! -f "$WEB_API_PASSWORD_FILE" ]; then
+if [ ! -f "$WEB_API_PASSWORD_FILE" ] || [ ! -f "$CRYPTO_RANDOM_FILE" ]; then
 
     echo "generating random secrets"
 
