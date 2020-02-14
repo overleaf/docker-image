@@ -270,6 +270,7 @@ if process.env["SHARELATEX_EMAIL_FROM_ADDRESS"]?
 			#AWS Creds
 			AWSAccessKeyID: process.env["SHARELATEX_EMAIL_AWS_SES_ACCESS_KEY_ID"]
 			AWSSecretKey: process.env["SHARELATEX_EMAIL_AWS_SES_SECRET_KEY"]
+      region: process.env["SHARELATEX_EMAIL_AWS_SES_REGION"] or 'us-east-1'
 
 			#SMTP Creds
 			host: process.env["SHARELATEX_EMAIL_SMTP_HOST"]
