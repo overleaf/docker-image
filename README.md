@@ -1,5 +1,7 @@
 # Overleaf Docker Image
 
+** THIS REPOSITORY HAS BEEN MERGED INTO https://github.com/overleaf/overleaf . **
+
 This is the source for building the Overleaf community-edition docker image.
 
 
